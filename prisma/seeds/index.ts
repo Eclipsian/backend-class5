@@ -34,9 +34,9 @@ export const seeding = async (prisma: PrismaClient) => {
           {
             id: exampleProduct.id,
           },
-          {
-            //can have another product
-          }
+          //{
+            // can add another product
+          //},
         ],
       },
     },

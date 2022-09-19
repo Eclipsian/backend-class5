@@ -15,7 +15,6 @@ model Student {
   lastName  String
   age       Int
   grade     String
-
   order     Order[]
 }
 
@@ -26,9 +25,7 @@ model Product {
   title    String
   price    Int
   quantity Int
-
-  order    Order? @relation(fields: [orderId], references: [id])
-  orderId  Int?
+  orders   Order[]
 }
 
 

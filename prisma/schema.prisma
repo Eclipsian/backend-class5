@@ -7,18 +7,14 @@ datasource db {
   url      = "postgresql://bctc:Bctc666!@lab.bctc.io:7087/se-adv-2-project-2-erica"
 }
 
-
-
 model Student {
   id        Int    @id @default(autoincrement())
   firstName String
   lastName  String
   age       Int
   grade     String
-  order     Order[]
+  orders     Order[]
 }
-
-
 
 model Product {
   id       Int    @id @default(autoincrement())
@@ -28,11 +24,9 @@ model Product {
   orders   Order[]
 }
 
-
-
 model Order {
   id        Int      @id @default(autoincrement())
-  student   Student  @relation(fields: [studentId], references: [id])
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Restrict)
   studentId Int
   products  Product[]
 }

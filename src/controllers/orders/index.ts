@@ -28,7 +28,25 @@ export const createOrder = async (req: Request, res: Response) => {
 		},
 		include: {
 			products: true,
+			student : true,
 		},
 	});
 	res.json(order);
 };
+
+export const deleteOrder = async (req: Request, res: Response) => {
+	const { id } = req.body;
+	try { 
+	  const order = await prisma.order.delete({
+		where: {
+		  id: Number(id),
+		},
+	  });
+	  res.json(order);
+	} catch (error) {
+	  console.log(error);
+	  res.json({
+		message: 'Something went wrong'
+	  });
+	}
+  };

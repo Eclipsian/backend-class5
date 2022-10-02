@@ -69,3 +69,54 @@ export const deleteStudent = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const updateStudent = async (req: Request, res: Response) => {
+  const { id, firstName, lastName, age, grade } = req.body;
+
+  const existingStudent = await prisma.student.findFirst({
+    where: {
+      id: Number(id),
+    },
+  });
+  if (!existingStudent) {
+    return res.json({
+      message: 'Student does not exist',
+    });
+  }
+
+  const student = await prisma.student.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      firstName,
+      lastName,
+      age: Number(age),
+      grade,
+    },
+  });
+  res.json(student);
+};
+
+export const getStudentById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const student = await prisma.student.findFirst({
+    where: {
+      id: Number(id),
+    },
+    include: {
+      orders: {
+        select: {
+          id: true,
+          products: true,
+        },
+      },
+    },
+  });
+  if (!student) {
+    return res.json({
+      message: 'Student does not exist',
+    });
+  }
+  res.json(student);
+};

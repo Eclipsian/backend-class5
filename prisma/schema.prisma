@@ -8,26 +8,36 @@ datasource db {
 }
 
 model Student {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   firstName String
   lastName  String
   age       Int
   grade     String
-  orders     Order[]
+  orders    Order[]
 }
 
 model Product {
-  id       Int    @id @default(autoincrement())
-  title    String
-  price    Int
-  quantity Int
-  orders   Order[]
+  id         Int       @id @default(autoincrement())
+  title      String
+  price      Int
+  quantity   Int
+  orders     Order[]
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  student   Student  @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  id        Int       @id @default(autoincrement())
+  student   Student   @relation(fields: [studentId], references: [id], onDelete: Restrict)
   studentId Int
   products  Product[]
 }
 
+model Category {
+  id                String    @id @default(uuid())
+  title             String
+  products          Product[]
+  description       String?
+  thumbnailImageUrl String?
+  heroImageUrl      String?
+}

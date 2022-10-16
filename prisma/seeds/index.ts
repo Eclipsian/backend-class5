@@ -5,6 +5,27 @@ export const seeding = async (prisma: PrismaClient) => {
   console.log('Seeding start...');
   const now = new Date();
 
+  const laptopCatergory = await prisma.category.create({
+    data: {
+      title: "Laptop",
+    },
+  });
+  const phoneCategory = await prisma.category.create({
+    data: {
+      title: "Phones",
+    },
+  });
+  const tabletCategory = await prisma.category.create({
+    data: {
+      title: "Tablets",
+    },
+  });
+  const accessoryCategory = await prisma.category.create({
+    data: {
+      title: "Accessories",
+    },
+  });
+
   const exampleStudent = await prisma.student.create({
     data: {
       firstName: 'Kevin',

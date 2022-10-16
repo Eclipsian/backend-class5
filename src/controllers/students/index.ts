@@ -72,7 +72,6 @@ export const deleteStudent = async (req: Request, res: Response) => {
 
 export const updateStudent = async (req: Request, res: Response) => {
   const { id, firstName, lastName, age, grade } = req.body;
-
   const existingStudent = await prisma.student.findFirst({
     where: {
       id: Number(id),

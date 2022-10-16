@@ -6,13 +6,28 @@ export const getAllProducts = async (req: Request, res: Response) => {
   res.json(products);
 };
 
+export const getAllProductsByCategory = async (req: Request, res: Response) => {
+  const { categoryId } = req.params;
+  const products = await prisma.product.findMany({
+    where: {
+      categoryId,
+    },
+  });
+  res.json(products);
+};
+
 export const createProduct = async (req: Request, res: Response) => {
-  const { title, price, quantity } = req.body;
+  const { title, price, quantity, categoryId } = req.body;
   const product = await prisma.product.create({
     data : {
       title,
       price: Number(price),
       quantity: Number(quantity),
+      category: {
+        connect: {
+          id: categoryId,
+        }
+      }
     }
   });
   res.json(product);
@@ -21,7 +36,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   const { id } = req.body;
   try { 
-
+    
     const productExistsInOrder = await prisma.order.findFirst({
       where: {
         products: {
@@ -36,7 +51,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
         message: 'Cannot delete product with existing order'
       });
     }
-
+    
     const existingProduct = await prisma.product.findFirst({
       where: {
         id: Number(id),
@@ -47,14 +62,14 @@ export const deleteProduct = async (req: Request, res: Response) => {
         message: 'Product does not exist',
       });
     }
-
+    
     const product = await prisma.product.delete({
       where: {
         id: Number(id),
       },
     });
     res.json(product);
-
+    
   } catch (error) {
     res.json({
       message: 'Error deleting product',
@@ -64,7 +79,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   const { id, title, price, quantity } = req.body;
-
+  
   const existingProduct = await prisma.product.findFirst({
     where: {
       id: Number(id),
@@ -75,7 +90,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       message: 'Product does not exist',
     });
   }
-
+  
   const product = await prisma.product.update({
     where: {
       id: Number(id),
@@ -111,3 +126,13 @@ export const getProductById = async (req: Request, res: Response) => {
   }
   res.json(product);
 };
+
+// export const getProductById = async (req: Request, res: Response) => {
+//   const { id } = req.params;
+//   const product = await prisma.product.findFirst({
+//     where: {
+//       id: Number(id),
+//     },
+//   });
+//   res.json(product);
+// };

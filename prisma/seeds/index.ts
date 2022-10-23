@@ -32,6 +32,8 @@ export const seeding = async (prisma: PrismaClient) => {
       lastName: 'Zhang',
       age: 10,
       grade: 'A',
+      email: 'kevin.zhang@example.com',
+      password: '123456',
     },
   });
 

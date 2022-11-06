@@ -5,7 +5,7 @@ export const seeding = async (prisma: PrismaClient) => {
   console.log('Seeding start...');
   const now = new Date();
 
-  const laptopCatergory = await prisma.category.create({
+  const laptopCategory = await prisma.category.create({
     data: {
       title: "Laptop",
     },
@@ -44,6 +44,33 @@ export const seeding = async (prisma: PrismaClient) => {
       quantity: 48973,
     }
   })
+
+  const products = await prisma.product.createMany({
+		data: [
+			{
+				title: 'MacBook Pro 2021',
+				price: 2999,
+				quantity: 1000,
+				categoryId: laptopCategory.id,
+			},
+			{
+				title: 'iPad Pro 2021',
+				price: 999,
+				quantity: 1000,
+				categoryId: tabletCategory.id,
+			},
+			{
+				title: 'Apple Watch Series 7',
+				price: 599,
+				quantity: 1000,
+				categoryId: accessoryCategory.id,
+			},
+		],
+	});
+
+  if (products) {
+    console.log(' products created.');
+  }
 
   const order = await prisma.order.create({
     data: {

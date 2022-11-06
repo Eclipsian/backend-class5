@@ -12,6 +12,8 @@
     "studio": "prisma studio"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.3",
+    "@heroicons/react": "^2.0.12",
     "@prisma/client": "3.12.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^7.1.0",

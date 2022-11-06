@@ -10,5 +10,6 @@ baseRouter.use('/products', productRouter);
 baseRouter.use('/orders', orderRouter);
 baseRouter.use('/students', studentRouter);
 baseRouter.use('/categories', categoryRouter);
+baseRouter.get('/health')
 
 export default baseRouter;

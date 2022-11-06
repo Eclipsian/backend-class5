@@ -110,14 +110,14 @@ export const getProductById = async (req: Request, res: Response) => {
     where: {
       id: Number(id),
     },
-    include: {
-      orders: {
-        select: {
-          id: true,
-          products: true,
-        },
-      },
-    },
+    // include: {
+    //   orders: {
+    //     select: {
+    //       id: true,
+    //       products: true,
+    //     },
+    //   },
+    // },
   });
   if (!product) {
     return res.json({
@@ -126,13 +126,3 @@ export const getProductById = async (req: Request, res: Response) => {
   }
   res.json(product);
 };
-
-// export const getProductById = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const product = await prisma.product.findFirst({
-//     where: {
-//       id: Number(id),
-//     },
-//   });
-//   res.json(product);
-// };

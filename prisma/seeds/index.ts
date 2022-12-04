@@ -38,12 +38,54 @@ export const seeding = async (prisma: PrismaClient) => {
   });
 
   const exampleProduct = await prisma.product.create({
-    data: {
-      title: 'iPhone 14',
-      price: 6572,
-      quantity: 48973,
-    }
-  })
+		data: {
+			title: 'iPhone 14',
+			price: 6572,
+			quantity: 48973,
+      description: 'Best iPhone ever',
+			category: {
+				connect: {
+					id: phoneCategory.id,
+				},
+			},
+			thumbnailImage:
+				'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-model-unselect-gallery-2-202209_GEO_US?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1660753617560',
+			reviews: {
+				createMany: {
+					data: [
+						{
+							rating: 5,
+							comment: 'I love this product',
+							studentId: exampleStudent.id,
+						},
+						{
+							rating: 4,
+							comment: 'I like this product',
+							studentId: exampleStudent.id,
+						},
+					],
+				},
+			},
+			highlightTitle: 'iPhone 14 Pro',
+			highlightDescription: 'The best iPhone ever',
+			productHighlight: {
+				createMany: {
+					data: [
+						{
+							title: 'A14 Bionic',
+							subtitle: 'The fastest chip in a smartphone',
+							image: '',
+						},
+						{
+							title: 'Pro camera system',
+							subtitle: 'The most advanced camera system ever on iPhone',
+							image: '',
+						},
+					],
+				},
+			},
+		},
+	});
 
   const products = await prisma.product.createMany({
 		data: [

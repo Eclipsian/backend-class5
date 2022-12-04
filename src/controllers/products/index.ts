@@ -110,14 +110,15 @@ export const getProductById = async (req: Request, res: Response) => {
     where: {
       id: Number(id),
     },
-    // include: {
-    //   orders: {
-    //     select: {
-    //       id: true,
-    //       products: true,
-    //     },
-    //   },
-    // },
+    include: {
+      category: true,
+      reviews: {
+        include: {
+          student: true,
+        },
+      },
+      productHighlight: true,
+    },
   });
   if (!product) {
     return res.json({

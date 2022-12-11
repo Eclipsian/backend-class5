@@ -35,8 +35,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
   const { id } = req.body;
-  try { 
-    
+  try {
     const productExistsInOrder = await prisma.order.findFirst({
       where: {
         products: {

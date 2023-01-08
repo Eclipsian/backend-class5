@@ -116,7 +116,7 @@ export const getProductById = async (req: Request, res: Response) => {
           student: true,
         },
       },
-      productHighlight: true,
+      productHighlights: true,
     },
   });
   if (!product) {

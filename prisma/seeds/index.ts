@@ -8,6 +8,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const laptopCategory = await prisma.category.create({
 		data: {
 			title: 'Laptop',
+			slug: 'laptop',
 			thumbnailImageUrl:
 				'https://www.apple.com/v/mac/home/br/images/overview/compare/compare_mbp14_and_16__f2dhysusb5im_large.png',
 			subCategory: {
@@ -15,15 +16,19 @@ export const seeding = async (prisma: PrismaClient) => {
 					data: [
 						{
 							title: 'MacBook Pro',
+							slug: 'macbook-pro',
 						},
 						{
 							title: 'MacBook Air',
+							slug: 'macbook-air',
 						},
 						{
 							title: 'Macbook',
+							slug: 'macbook',
 						},
 						{
 							title: 'iMac',
+							slug: 'imac',
 						},
 					],
 				},
@@ -33,6 +38,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const phoneCategory = await prisma.category.create({
 		data: {
 			title: 'Phones',
+			slug: 'phones',
 			thumbnailImageUrl:
 				'https://www.apple.com/v/iphone/home/bk/images/overview/why-iphone/ios16__b66zg2a3322q_large.jpg',
 			subCategory: {
@@ -40,18 +46,23 @@ export const seeding = async (prisma: PrismaClient) => {
 					data: [
 						{
 							title: 'iPhone 14',
+							slug: 'iphone-14',
 						},
 						{
 							title: 'iPhone 14 Pro',
+							slug: 'iphone-14-pro',
 						},
 						{
 							title: 'iPhone 13',
+							slug: 'iphone-13',
 						},
 						{
 							title: 'iPhone 13 Pro',
+							slug: 'iphone-13-pro'
 						},
 						{
 							title: 'iPhone Mini',
+							slug: 'iphone-mini',
 						},
 					],
 				},
@@ -61,6 +72,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const tabletCategory = await prisma.category.create({
 		data: {
 			title: 'Tablets',
+			slug: 'tablets',
 			thumbnailImageUrl:
 				'https://www.apple.com/v/ipad/home/cc/images/overview/hero/ipad_hero__d0tgmaq6shm6_large.jpg',
 			subCategory: {
@@ -68,12 +80,15 @@ export const seeding = async (prisma: PrismaClient) => {
 					data: [
 						{
 							title: 'iPad Air',
+							slug: 'ipad-air',
 						},
 						{
 							title: 'iPad Mini',
+							slug: 'ipad-mini',
 						},
 						{
 							title: 'iPad Pro',
+							slug: 'ipad-pro',
 						},
 					],
 				},
@@ -83,6 +98,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const accessoryCategory = await prisma.category.create({
 		data: {
 			title: 'Accessories',
+			slug: 'accessories',
 			thumbnailImageUrl:
 				'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/magsafe-202209?wid=2880&hei=960&fmt=jpeg&qlt=90&.v=1666047384972',
 			subCategory: {
@@ -90,21 +106,27 @@ export const seeding = async (prisma: PrismaClient) => {
 					data: [
 						{
 							title: 'Airpods',
+							slug: 'airpods',
 						},
 						{
 							title: 'Airpods Max',
+							slug: 'airpods-max',
 						},
 						{
 							title: 'Chargers',
+							slug: 'chargers',
 						},
 						{
 							title: 'Cables',
+							slug: 'cables',
 						},
 						{
 							title: 'Cases',
+							slug: 'cases',
 						},
 						{
 							title: 'Apple Watch',
+							slug: 'apple-watch',
 						},
 					],
 				},
@@ -150,12 +172,18 @@ export const seeding = async (prisma: PrismaClient) => {
   const exampleProduct = await prisma.product.create({
 		data: {
 			title: 'iPhone 14',
+			slug: 'iphone-14',
 			price: 6572,
 			quantity: 48973,
       description: 'Best iPhone ever',
 			subCategory: {
 				connect: {
 					id: iPhoneCategory?.id,
+				},
+			},
+			category: {
+				connect: {
+					id: phoneCategory.id,
 				},
 			},
 			thumbnailImage:
@@ -201,6 +229,7 @@ export const seeding = async (prisma: PrismaClient) => {
 		data: [
 			{
 				title: 'MacBook Pro 2021',
+				slug: 'macbook-pro',
 				price: 2999,
 				quantity: 1000,
 				subCategoryId: macbookProSubCategory?.id,
@@ -209,6 +238,7 @@ export const seeding = async (prisma: PrismaClient) => {
 			},
 			{
 				title: 'iPad Pro 2021',
+				slug: 'ipad-pro',
 				price: 999,
 				quantity: 1000,
 				subCategoryId: iPadProSubCategory?.id,
@@ -217,6 +247,7 @@ export const seeding = async (prisma: PrismaClient) => {
 			},
 			{
 				title: 'Apple Watch Series 7',
+				slug: 'apple-watch',
 				price: 599,
 				quantity: 1000,
 				subCategoryId: appleWatchSubCategory?.id,

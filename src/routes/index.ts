@@ -10,7 +10,7 @@ const baseRouter = Router();
 baseRouter.use('/products', productRouter);
 baseRouter.use('/orders', orderRouter);
 baseRouter.use('/students', studentRouter);
-baseRouter.use('/categories', categoryRouter);
+baseRouter.use('/category', categoryRouter);
 baseRouter.use('/reviews', reviewRouter);
 baseRouter.get('/health', (req, res) => {
   res.send('OK');

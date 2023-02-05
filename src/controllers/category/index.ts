@@ -13,7 +13,7 @@ export const getCategoryBySlug = async (req: Request, res: Response) => {
 			slug,
 		},
 		include: {
-			products: true,
+			subCategory: true,
 		},
 	});
 	res.json(data);

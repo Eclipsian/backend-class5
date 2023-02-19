@@ -9,12 +9,15 @@ export const getAllSubcategory = async (req: Request, res: Response) => {
 
 export const getAllProductsBySubcategory = async (req: Request, res: Response) => {
   const { slug } = req.params;
-  const { search } = req.query;
+  const { search, priceFilters } = req.query;
   const subCategory = await prisma.subCategory.findFirst({
 		where: {
 			slug,
 		},
 	});
+
+  const priceFilterArr = priceFilters as {min: string, max: string}[];
+
   const products = await prisma.product.findMany({
     where: {
       AND: [
@@ -26,8 +29,16 @@ export const getAllProductsBySubcategory = async (req: Request, res: Response) =
         },
         {
           subCategoryId: subCategory?.id,
+        },
+        {
+          OR: priceFilters && priceFilterArr.length > 0 ? priceFilterArr.map((price: { min: string, max: string }) => ({
+            price: {
+              lte: Number(price.max),
+              gte: Number(price.min),
+            }
+          })) : undefined,
         }
-      ]  
+      ],
     }
   });
 

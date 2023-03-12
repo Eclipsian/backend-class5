@@ -13,10 +13,10 @@ model Student {
   email     String   @unique
   avatar    String?
   password  String
-  firstName String
-  lastName  String
-  age       Int
-  grade     String
+  firstName String?
+  lastName  String?
+  age       Int?
+  grade     String?
   orders    Order[]
   reviews   Review[]
 }

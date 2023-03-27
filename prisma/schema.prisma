@@ -19,6 +19,7 @@ model Student {
   grade     String?
   orders    Order[]
   reviews   Review[]
+  createdAt DateTime @default(now())
 }
 
 model Product {
@@ -64,6 +65,7 @@ model Order {
   student   Student   @relation(fields: [studentId], references: [id], onDelete: Restrict)
   studentId Int
   products  Product[]
+  createdAt DateTime @default(now())
 }
 
 model Category {

@@ -1,12 +1,28 @@
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
+export const check = async (req: Request, res: Response) => {
+  const { token } = req.query;
+  if (token) {
+    try {
+      const isValid = jwt.verify(token as string, 'my very secret key');
+      return res.json(isValid);
+    } catch (error: any) {
+      if (error.message === 'jwt expired') {
+        return res.status(401).json({ message: 'Token expired' });
+      }
+    }
+  }
+};
 
 export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log(email, 'email');
+  console.log(password, 'password');
   const userExists = await prisma.student.findUnique({
     where: {
       email
@@ -41,8 +57,17 @@ export const signin = async (req: Request, res: Response) => {
     }
   });
 
-  return res.json(user);
-}
+  if (user) {
+    const token = jwt.sign({ id: user.id }, 'my very secret key', {
+      expiresIn: 86400,
+    });
+
+    return res.json({
+      ...user,
+      token,
+    });
+  };
+};
 
 export const signup = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -51,9 +76,8 @@ export const signup = async (req: Request, res: Response) => {
     data: {
       email,
       password: hash
-    }
-  })
+    },
+  });
   return res.json(student);
-}
-
+};
 

@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 export const seeding = async (prisma: PrismaClient) => {
 	console.log('Seeding start...');
+	const passwordHash = bcrypt.hashSync('123456', 10);
 	const dummyStudent = await prisma.student.create({
 		data: {
 			firstName: 'Kevin',
@@ -10,93 +11,93 @@ export const seeding = async (prisma: PrismaClient) => {
 			age: 10,
 			grade: 'A',
 			email: 'kevin.zhang@example.com',
-			password: '123456',
+			password: passwordHash,
 		},
 	});
 
 	// Create some dummy category here:
 	// Mac, Phones, Tablets, Accessories.
 
-const clothing = await prisma.category.create({
-	data: {
-		title: 'Clothing',
-		slug: 'clothing',
-		description:
-			"The latest in women's designer clothing from today's top brands has arrived at Saks Fifth Avenue. Our wide selection of women’s denim, tops, sweaters, jackets and loungewear offers styles for any occasion. Plus, complete any look with our curation of women’s designer shoes and accessories.",
-		thumbnailImageUrl:
-			'https://image.s5a.com/is/image/saks/0400018027345_BLACKNAVY_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-		subCategory: {
-			createMany: {
-				data: [
-					{
-						title: 'Dresses',
-						slug: 'dresses',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400018027345_BLACKNAVY_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-					{
-						title: 'Tops',
-						slug: 'tops',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400017269760_SLATE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-					{
-						title: 'Skirts',
-						slug: 'skirts',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400018174422_CLOUDWHITE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-					{
-						title: 'Jackets',
-						slug: 'jackets',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400017826724_LIGHTGREYSANDSTONEHAZE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-					{
-						title: 'Sweaters',
-						slug: 'sweaters',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400017643364_CORALRED_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-				],
+	const clothing = await prisma.category.create({
+		data: {
+			title: 'Clothing',
+			slug: 'clothing',
+			description:
+				"The latest in women's designer clothing from today's top brands has arrived at Saks Fifth Avenue. Our wide selection of women’s denim, tops, sweaters, jackets and loungewear offers styles for any occasion. Plus, complete any look with our curation of women’s designer shoes and accessories.",
+			thumbnailImageUrl:
+				'https://image.s5a.com/is/image/saks/0400018027345_BLACKNAVY_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+			subCategory: {
+				createMany: {
+					data: [
+						{
+							title: 'Dresses',
+							slug: 'dresses',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400018027345_BLACKNAVY_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+						{
+							title: 'Tops',
+							slug: 'tops',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400017269760_SLATE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+						{
+							title: 'Skirts',
+							slug: 'skirts',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400018174422_CLOUDWHITE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+						{
+							title: 'Jackets',
+							slug: 'jackets',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400017826724_LIGHTGREYSANDSTONEHAZE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+						{
+							title: 'Sweaters',
+							slug: 'sweaters',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400017643364_CORALRED_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+					],
+				},
 			},
 		},
-	},
-});
+	});
 
-const shoes = await prisma.category.create({
-	data: {
-		title: 'Shoes',
-		slug: 'shoes',
-		description: "Women's Designer Shoes & Footwear",
-		thumbnailImageUrl:
-			'https://image.s5a.com/is/image/saks/011023_WMHP_3UP_1_SH_MINIMAL?scl=1&qlt=83&fmt=jpg',
-		subCategory: {
-			createMany: {
-				data: [
-					{
-						title: 'Boots',
-						slug: 'boots',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400016855480_BLACK_A1?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-					{
-						title: 'Flats',
-						slug: 'flats',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400017283513_BLACK?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-					{
-						title: 'Heels',
-						slug: 'heels',
-						thumbnailImageUrl:
-							'https://image.s5a.com/is/image/saks/0400017787163_MIRRORSILVER?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
-					},
-				],
+	const shoes = await prisma.category.create({
+		data: {
+			title: 'Shoes',
+			slug: 'shoes',
+			description: "Women's Designer Shoes & Footwear",
+			thumbnailImageUrl:
+				'https://image.s5a.com/is/image/saks/011023_WMHP_3UP_1_SH_MINIMAL?scl=1&qlt=83&fmt=jpg',
+			subCategory: {
+				createMany: {
+					data: [
+						{
+							title: 'Boots',
+							slug: 'boots',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400016855480_BLACK_A1?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+						{
+							title: 'Flats',
+							slug: 'flats',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400017283513_BLACK?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+						{
+							title: 'Heels',
+							slug: 'heels',
+							thumbnailImageUrl:
+								'https://image.s5a.com/is/image/saks/0400017787163_MIRRORSILVER?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+						},
+					],
+				},
 			},
 		},
-	},
-});
+	});
 
 	const dressSubCategory = await prisma.subCategory.findFirst({
 		where: {

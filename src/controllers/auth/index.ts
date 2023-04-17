@@ -10,7 +10,11 @@ export const check = async (req: Request, res: Response) => {
   if (token) {
     try {
       const isValid = jwt.verify(token as string, 'my very secret key');
-      return res.json(isValid);
+      const user = jwt.decode(token as string);
+      return res.json({
+        token: isValid,
+        user,
+      });
     } catch (error: any) {
       if (error.message === 'jwt expired') {
         return res.status(401).json({ message: 'Token expired' });
@@ -21,8 +25,6 @@ export const check = async (req: Request, res: Response) => {
 
 export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log(email, 'email');
-  console.log(password, 'password');
   const userExists = await prisma.student.findUnique({
     where: {
       email

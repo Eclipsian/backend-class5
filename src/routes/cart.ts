@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { addItemToCart, getCartByStudent, updateCartItemQuantity } from '../controllers/cart';
+import {
+	addItemToCart,
+	getCartByStudent,
+	updateCartItemQuantity,
+} from '../controllers/cart';
 
 const cartRouter = Router();
 

@@ -39,11 +39,11 @@ export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const productExistsInOrder = await prisma.order.findFirst({
       where: {
-        products: {
-          some: {
-            id: Number(id),
-          },
-        },
+        // products: {
+        //   some: {
+        //     id: Number(id),
+        //   },
+        // },
       },
     });
     if (!productExistsInOrder) {

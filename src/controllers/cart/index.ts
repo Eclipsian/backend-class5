@@ -124,13 +124,18 @@ export const addItemToCart = async (req: Request, res: Response) => {
 	return res.json(cart);
 };
 
-
-
 export const updateCartItemQuantity = async (req: Request, res: Response) => {
 	const { cartItemId, quantity } = req.body;
 
 	if (quantity < 1) {
-		return res.status(400).json({ message: 'Quantity must be at least 1' });
+		await prisma.cartItem.delete({
+			where: {
+				id: +cartItemId,
+			},
+		});
+		return res.json({
+			message: 'Item was deleted',
+		});
 	}
 
 	const cartItem = await prisma.cartItem.findUnique({
@@ -174,31 +179,29 @@ export const updateCartItemQuantity = async (req: Request, res: Response) => {
 	return res.json(cart);
 };
 
-
 export const getCartByStudent = async (req: Request, res: Response) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  const cart = await prisma.cart.findFirst({
-    where: {
-      studentId: +id,
-    },
-    include: {
-      cartItems: {
+	const cart = await prisma.cart.findFirst({
+		where: {
+			studentId: +id,
+		},
+		include: {
+			cartItems: {
 				include: {
 					product: true,
 				},
 			},
-    },
-  });
+		},
+	});
 
-  if (!cart) {
-    return res.status(404).json({ message: 'Cart not found' });
-  }
+	if (!cart) {
+		return res.status(404).json({ message: 'Cart not found' });
+	}
 
 	cart.cartItems = cart.cartItems.sort((a, b) => {
 		return a.product.price - b.product.price;
 	});
 
-  return res.json(cart);
+	return res.json(cart);
 };
-

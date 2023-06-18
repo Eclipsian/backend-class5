@@ -10,7 +10,6 @@ export const getAllStudents = async (req: Request, res: Response) => {
       orders : {
         select : {
           id : true,
-          products : true,
         },
       },
     },
@@ -82,8 +81,7 @@ export const loginStudent = async (req: Request, res: Response) => {
 
 export const deleteStudent = async (req: Request, res: Response) => {
   const { id } = req.body;
-  try { 
-
+  try {
     const existingOrder = await prisma.order.findFirst({
       where: {
         studentId: Number(id),
@@ -122,14 +120,12 @@ export const deleteStudent = async (req: Request, res: Response) => {
 
 export const updateStudent = async (req: Request, res: Response) => {
   const { id, firstName, lastName, age, grade } = req.body;
-
   const requestStudentId = req.headers.authorization?.split(' ')[1];
   if (requestStudentId !== id) {
     return res.json({
       message: 'You are not authorized to update this student',
     });
   }
-
   const existingStudent = await prisma.student.findFirst({
     where: {
       id: Number(id),
@@ -140,7 +136,6 @@ export const updateStudent = async (req: Request, res: Response) => {
       message: 'Student does not exist',
     });
   }
-
   const student = await prisma.student.update({
     where: {
       id: Number(id),
@@ -165,7 +160,6 @@ export const getStudentById = async (req: Request, res: Response) => {
       orders: {
         select: {
           id: true,
-          products: true,
         },
       },
     },
